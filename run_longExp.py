@@ -7,7 +7,7 @@ from exp.exp_main import Exp_Main
 import random
 import numpy as np
 
-fix_seed = 2021
+fix_seed = 5
 random.seed(fix_seed)
 torch.manual_seed(fix_seed)
 np.random.seed(fix_seed)
@@ -36,6 +36,11 @@ parser.add_argument('--freq', type=str, default='h',
                          'you can also use more detailed freq like 15min or 3h')
 parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
 
+#new
+parser.add_argument('--n_points', type=int, default=50, help='Number of points')
+parser.add_argument('--wavelet', type=int, default=1, help='Description of wavelet_j')
+
+
 # forecasting task
 parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
 parser.add_argument('--label_len', type=int, default=48, help='start token length')
@@ -43,7 +48,7 @@ parser.add_argument('--pred_len', type=int, default=96, help='prediction sequenc
 parser.add_argument('--seasonal_patterns', type=str, default='Monthly', help='subset for M4')
 
 
-parser.add_argument('--top_k', type=int, default=5, help='for TimesBlock/ScaleGraphBlock')
+parser.add_argument('--top_k', type=int, default=1, help='for TimesBlock/ScaleGraphBlock')
 parser.add_argument('--num_kernels', type=int, default=6, help='for Inception')
 
 parser.add_argument('--num_nodes', type=int, default=7, help='to create Graph')
@@ -52,11 +57,15 @@ parser.add_argument('--tanhalpha', type=float, default=3, help='')
 
 #GCN
 parser.add_argument('--node_dim', type=int, default=10, help='each node embbed to dim dimentions')
-parser.add_argument('--gcn_depth', type=int, default=2, help='')
+parser.add_argument('--gcn_depth', type=int, default=4, help='')
 parser.add_argument('--gcn_dropout', type=float, default=0.3, help='')
 parser.add_argument('--propalpha', type=float, default=0.3, help='')
 parser.add_argument('--conv_channel', type=int, default=32, help='')
 parser.add_argument('--skip_channel', type=int, default=32, help='')
+
+
+#modification
+parser.add_argument('--n_gnn_layer', type=int, default=12, help='Number of GNN layers')
 
 
 # DLinear
@@ -93,7 +102,7 @@ parser.add_argument('--itr', type=int, default=2, help='experiments times')
 parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
 parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
 parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
-parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
+parser.add_argument('--learning_rate', type=float, default=0.0005, help='optimizer learning rate')
 parser.add_argument('--des', type=str, default='test', help='exp description')
 parser.add_argument('--loss', type=str, default='MSE', help='loss function')
 parser.add_argument('--lradj', type=str, default='type1', help='adjust learning rate')
